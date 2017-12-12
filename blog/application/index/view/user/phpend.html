@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>个人博客</title>
+<meta name="keywords" content="个人博客" />
+<meta name="description" content="优雅、稳重、大气,低调。" />
+<link href="__STATIC__/index/css/index.css" rel="stylesheet">
+<link href="__STATIC__/index/css/style.css" rel="stylesheet">
+</head>
+<body>
+{include file='public/header'}
+<article class="blogs">
+<h1 class="t_nav"><span>可以简单理解为提升网站自然排名、改进用户体验、提高转化率的网站优化行为</span><a href="{:url('index/index/index')}" class="n1">网站首页</a><a href="#" class="n2">PHP学习</a></h1>
+<div class="bloglist left">
+	{foreach $art as $v}
+   <!--wz-->
+    <div class="wz">
+    <h3>{$v->title}</h3>
+    <p class="dateview"><span>{$v->create_time}</span><span>作者：{$v->author}</span><span>分类：[<a href="#">{$v->label}</a>]</span></p>
+    <figure><img src="__STATIC__/upload/{$v->imgname}"></figure>
+    <ul>
+      {$v->content|mb_substr=0,150}...
+      <a title="阅读全文" href="{:url('index/detail',['id'=>$v->id])}" target="_blank" class="readmore">阅读全文>></a>
+    </ul>
+    <div class="clear"></div>
+    </div>
+   <!--end-->
+   {/foreach}
+   {$art->render()}
+</div>
+
+<!--right-->
+{include file='public/right'}
+</article>
+{include file='public/footer'}

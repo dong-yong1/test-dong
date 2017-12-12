@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{$con->title}</title>
+<meta name="keywords" content="个人博客" />
+<meta name="description" content="优雅、稳重、大气,低调。" />
+<link href="__STATIC__/index/css/index.css" rel="stylesheet">
+<link href="__STATIC__/index/css/style.css" rel="stylesheet">
+</head>
+<body>
+<header>
+  <div id="logo"><a href="{:url('index/index/index')}"></a></div>
+  <nav class="topnav" id="topnav">
+      <a href="{:url('index/index')}"><span>首页</span><span class="en">Home</span></a>
+      <a href="{:url('user/about')}"><span>关于我</span><span class="en">About</span></a>
+      <a href="{:url('user/diary')}"><span>个人日志</span><span class="en">Diary</span></a>
+      <a href="{:url('user/phpend')}"><span>PHP后台</span><span class="en">PHP</span></a>
+      <a href="{:url('user/summary')}"><span>个人心得总结</span><span class="en">Summary</span></a>
+      <a href="{:url('user/gustbook')}"><span>留言版</span><span class="en">Gustbook</span></a>
+  </nav>
+  	 	<div class="register">			
+		{empty name='$Think.session.username'}
+		<a href="{:url('index/user/login')}">登录</a> 	
+		{else}
+		<a href="{:url('user/logout')}">退出</a><p id="register1">欢迎:<b>{$Think.session.username}</b></p>
+		{/empty}
+		<a href="{:url('index/index/index')}">首页</a>					
+  	 	</div>
+</header>
+
+<article class="blogs">
+<h1 class="t_nav"><span>PHP包括html、css、javascript的技术</span><a href="{:url('index/index/index')}" class="n1">网站首页</a></h1>
+<div class="bloglist left">
+    <!--wz-->
+    <div class="wz">
+    	{block name="main"}{/block}
+    
+    
+			</div>
+		</div>
+
+    <div class="clear"></div>
+    </div>
+   <!--end-->
+    
+</div>
+<!--right-->
+{include file='public/right'}
+</article>
+<script src="__STATIC__/index/js/nav.js"></script>
+</html>

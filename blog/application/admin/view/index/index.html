@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>个人博客管理系统</title>
+<!--[if gte IE 9]>
+  <script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
+  <script src="js/html5shiv.min.js" type="text/javascript"></script>
+  <script src="js/respond.min.js" type="text/javascript"></script>
+  <script src="js/selectivizr-min.js" type="text/javascript"></script>
+<![endif]-->
+<!--[if lt IE 9]>
+  <script>window.location.href='upgrade-browser.html';</script>
+<![endif]-->
+</head>
+
+<body class="user-select">
+<section class="container-fluid">
+<!-- header -->
+{include file='public/header'}
+<!-- header --> 
+<!-- left -->
+<div class="row">
+    <aside class="col-sm-3 col-md-2 col-lg-2 sidebar">
+      <ul class="nav nav-sidebar">
+        <li  class="active"><a href="{:url('index/index')}">报告</a></li>
+      </ul>
+      <ul class="nav nav-sidebar">
+      	<li><a href="{:url('diary/diaryshow')}">日志</a></li>
+        <li><a href="{:url('article/index')}">文章</a></li>
+        <li><a href="{:url('comment/index')}">评论</a></li>
+        <li><a href="{:url('message/msg')}">留言</a></li>
+      </ul>
+      <ul class="nav nav-sidebar">
+        <li><a href="{:url('column/index')}">栏目</a></li>
+        <li><a class="dropdown-toggle" id="otherMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">其他</a>
+          <ul class="dropdown-menu" aria-labelledby="otherMenu">
+            <li><a href="{:url('others/index')}">友情链接</a></li>
+            <li><a href="{:url('others/loginlog')}">访问记录</a></li>           
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav nav-sidebar">
+        <li><a class="dropdown-toggle" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">用户</a>
+          <ul class="dropdown-menu" aria-labelledby="userMenu">
+          	<li><a href="{:url('user/detail')}">用户详情</a></li>
+            <li><a href="{:url('user/index')}">管理用户</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="{:url('others/loginlog')}">管理登录日志</a></li>
+          </ul>
+        </li>
+        <li><a class="dropdown-toggle" id="settingMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">设置</a>
+          <ul class="dropdown-menu" aria-labelledby="settingMenu">
+            <li><a href="{:url('config/setting')}">基本设置</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="disabled"><a>扩展菜单</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+<!-- left --> 
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main">
+      <h1 class="page-header">信息总览</h1>
+      <div class="row placeholders">
+        <div class="col-xs-6 col-sm-3 placeholder">
+          <h4>文章</h4>
+          <span class="text-muted">{$artNum} 条</span> </div>
+        <div class="col-xs-6 col-sm-3 placeholder">
+          <h4>评论</h4>
+          <span class="text-muted">{$comNum} 条</span> </div>
+        <div class="col-xs-6 col-sm-3 placeholder">
+          <h4>友链</h4>
+          <span class="text-muted">{$friNum} 条</span> </div>
+        <div class="col-xs-6 col-sm-3 placeholder">
+          <h4>访问量</h4>
+          <span class="text-muted">{$msgNum} 条</span> </div>
+      </div>
+      <h1 class="page-header">状态</h1>
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <tbody>
+            <tr>
+              <td>登录者: <span>{$log->username}</span>，这是您第 <span>{$Think.session.logcount+1}</span> 次登录</td>
+            </tr>
+            <tr>
+              <td>本次登录时间: {$log->logtime|date="Y-m-d H:i:s",###}, 本次登录IP: {$log->logip}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h1 class="page-header">系统信息</h1>
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr> </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>管理员个数:</td>
+              <td>{$num} 人</td>
+              <td>服务器软件:</td>
+              <td>Apache/2.4.4 (Win64)</td>
+            </tr>
+            <tr>
+              <td>浏览器:</td>
+              <td>支持通用浏览器</td>
+              <td>PHP版本:</td>
+              <td>7.1.5</td>
+            </tr>
+            <tr>
+              <td>操作系统:</td>
+              <td>Windows 7</td>
+              <td>PHP运行方式:</td>
+              <td>{$Think.server.GATEWAY_INTERFACE}</td>
+            </tr>
+            <tr>
+              <td>服务器域名:</td>
+              <td>{$Think.server.HTTP_HOST}</td>
+              <td>系统所在文件夹:</td>
+              <td>{$Think.server.WINDIR}</td>
+            </tr>
+            <tr>
+              <td>服务器端口</td>
+              <td>{$Think.server.SERVER_PORT}</td>
+              <td>当前时间:</td>
+              <td>{$Think.server.REQUEST_TIME|date='Y-m-d H:i:s',###}</td>
+            </tr>
+            <tr>
+              <td>登录者IP:</td>
+              <td>{$Think.server.REMOTE_ADDR}</td>
+              <td>MYSQL版本:</td>
+              <td>5.5.40</td>
+            </tr>
+            <tr>
+              <td>程序版本:</td>
+              <td class="version">ThinkPHP 5.0</td>
+              <td>上传文件:</td>
+              <td>可以 <font size="-6" color="#BBB">(最大文件：2M ，表单：8M )</font></td>
+            </tr>
+            <tr>
+              <td>程序编码:</td>
+              <td>UTF-8</td>
+              <td>当前时间:</td>
+              <td>{$Think.server.REQUEST_TIME|date='Y-m-d H:i:s',###}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>文件所在路径:</td>
+              <td>{$Think.server.DOCUMENT_ROOT}</td>
+              <td>请求方式:</td>
+              <td>{$Think.server.HTTP_CONNECTION}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+<!--个人信息模态框-->
+
+<!--提示模态框-->
+<div class="modal fade user-select" id="areDeveloping" tabindex="-1" role="dialog" aria-labelledby="areDevelopingModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="areDevelopingModalLabel" style="cursor:default;">该功能正在日以继夜的开发中…</h4>
+      </div>
+      <div class="modal-body"> <img src="__STATIC__/admin/images/baoman/baoman_01.gif" alt="深思熟虑" />
+        <p style="padding:15px 15px 15px 100px; position:absolute; top:15px; cursor:default;">很抱歉，程序猿正在日以继夜的开发此功能，本程序将会在以后的版本中持续完善！</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">朕已阅</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--右键菜单列表-->
+<div id="rightClickMenu">
+  <ul class="list-group rightClickMenuList">
+    <li class="list-group-item disabled">欢迎访问异清轩博客</li>
+    <li class="list-group-item"><span>IP：</span>172.16.10.129</li>
+    <li class="list-group-item"><span>地址：</span>河南省郑州市</li>
+    <li class="list-group-item"><span>系统：</span>Windows10 </li>
+    <li class="list-group-item"><span>浏览器：</span>Chrome47</li>
+  </ul>
+</div>
+<script src="__STATIC__/admin/js/bootstrap.min.js"></script> 
+<script src="__STATIC__/admin/js/admin-scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<aside class="right">
+ <div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare"><a class="bds_tsina"></a><a class="bds_qzone"></a><a class="bds_tqq"></a><a class="bds_renren"></a><span class="bds_more"></span><a class="shareCount"></a></div>
+   <div class="rnav">
+      <ul>
+       <li class="rnav1"><a href="{:url('index/detail',['id'=>48])}" title="" target="_blank">html单页优化技巧</a></li>
+       <li class="rnav2"><a href="{:url('index/detail',['id'=>49])}" title="" target="_blank">一个成功自媒体</a></li>
+       <li class="rnav3"><a href="{:url('index/detail',['id'=>50])}" title="" target="_blank">博客的风格化</a></li>
+       <li class="rnav4"><a href="{:url('index/detail',['id'=>1])}" title="" target="_blank">初学php</a></li>
+     </ul>      
+    </div>
+    
+<div class="news">
+    <h3 class="ph">
+      <p>精心<span>推荐</span></p>
+    </h3>
+    <ul class="paih">
+     {foreach $recom as $k}
+      <li><a href="{:url('index/detail',['id'=>$k->id])}" title="{$k->title}" target="_blank">{$k->title}</a></li>
+     {/foreach} 
+    </ul>
+     <h3>
+      <p>用户<span>关注</span></p>
+    </h3>
+    <ul class="rank">    
+     {foreach $rows as $vv}
+      <li><a href="{:url('index/detail',['id'=>$vv->id])}" title="{$vv->title}" target="_blank">{$vv->title}</a></li>
+      {/foreach}
+    </ul>  
+    <h3 class="links">
+      <p>友情<span>链接</span></p>
+    </h3>
+    <ul class="website">
+    {foreach $fr as $f}
+      <li><a href="{$f->url}">{$f->name}</a></li>
+     {/foreach}
+    </ul>  
+    </div> 
+</aside>

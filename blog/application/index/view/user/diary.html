@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>个人博客</title>
+<meta name="keywords" content="个人博客" />
+<meta name="description" content="优雅、稳重、大气,低调。" />
+<link href="__STATIC__/index/css/index.css" rel="stylesheet">
+<link href="__STATIC__/index/css/ty.css" rel="stylesheet">
+</head>
+<body>
+{include file='public/header'}
+<div class="moodlist">
+  <h1 class="t_nav"><span>记忆着曾经那些点点滴滴的往事！</span><a href="{:url('index/index/index')}" class="n1">网站首页</a><a href="#" class="n2">个人日记</a></h1>
+  <div class="bloglist">
+  {foreach $date as $v}
+    <ul class="arrow_box">
+     <div class="sy">
+      {$v->content}
+      </div>
+      <span class="dateview">{$v->pubtime|substr=0,10}</span>
+    </ul>  
+    {/foreach}  
+  </div>
+</div>
+
+{include file='public/footer'}

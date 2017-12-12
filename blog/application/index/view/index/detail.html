@@ -1,0 +1,40 @@
+{extend name="public:base" /}
+  
+<!-- 内容区 -->
+{block name="main"}
+<form action="{:url('article/comarticle',['aid'=>$res->id])}" method="post">
+<div class="section">
+	<h1 class="article-title">{$res->title}</h1>
+	<div class="clear">
+		<div class="side-left-680" id="article">		
+			<div class="article-info">{$res->create_time}&nbsp;&nbsp;&nbsp;&nbsp;<span>作者: {$res->author}</span><a href="#">评论({$comnum})</a></div>
+			<div class="article-body">
+				<img alt="垃圾" width="400" height="200" style="float:left;padding:10px;" src="__STATIC__/upload/{$res->imgname}">					
+				{$res->content}											
+			</div>
+		</div>
+	</div>
+</div>	
+	<!-- 评论内容 -->  
+     <div id="comment">
+				<p class="comment-count"><a href="#">已有<span>{$comnum}</span>条评论，共<span>{$comusernum}人</span>参与</a></p>
+				<textarea class="comment-content" name="comment" required="required" placeholder="请输入评论内容"></textarea>
+				<div class="comment-user-cont clear">
+				{if $Think.session.username==null}
+					<div class="comment-user-username">用户名:<input type="text" name="username"     class="comment-input" placeholder="请输入账号"/></div>
+					<div class="comment-user-password">密码:<input type="password" name="password" class="comment-input" placeholder="请输入密码"/></div>
+					<div class="comment-user-link"><input type="checkbox" name="remember"  value="1"/> 下次自动登录<a href="{:url('user/login')}">注册</a></div>					
+				{else}	
+					<div class="comment-user-logined">
+						<span><a href="#">{$Think.session.username}</a></span>
+						<span><a href="{:url('user/logout')}">退出</a></span>
+						
+						
+					</div>
+					{/if}									
+					
+				</div>
+	<input type="submit" class="comment-publishing-btn1" value="发表" />			
+	</form>
+				
+{/block}

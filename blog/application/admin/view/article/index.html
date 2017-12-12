@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>文章 - 个人博客管理系统</title>
+</head>
+
+<body class="user-select">
+<section class="container-fluid">
+<!-- header -->
+{include file='public/header'}
+<!-- header --> 
+<!-- left -->
+<div class="row">
+    <aside class="col-sm-3 col-md-2 col-lg-2 sidebar">
+      <ul class="nav nav-sidebar">
+        <li><a href="{:url('index/index')}">报告</a></li>
+      </ul>
+      <ul class="nav nav-sidebar">
+      <li><a href="{:url('diary/diaryshow')}">日志</a></li>
+        <li  class="active"><a href="{:url('article/index')}">文章</a></li>
+        <li><a href="{:url('comment/index')}">评论</a></li>
+        <li><a href="{:url('message/msg')}">留言</a></li>
+      </ul>
+      <ul class="nav nav-sidebar">
+        <li><a href="{:url('column/index')}">栏目</a></li>
+        <li><a class="dropdown-toggle" id="otherMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">其他</a>
+          <ul class="dropdown-menu" aria-labelledby="otherMenu">
+            <li><a href="{:url('others/index')}">友情链接</a></li>
+            <li><a href="{:url('others/loginlog')}">访问记录</a></li>           
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav nav-sidebar">
+        <li><a class="dropdown-toggle" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">用户</a>
+          <ul class="dropdown-menu" aria-labelledby="userMenu">
+          	<li><a href="{:url('user/detail')}">用户详情</a></li>
+            <li><a href="{:url('user/index')}">管理用户</a></li>            
+            <li><a href="{:url('others/loginlog')}">管理登录日志</a></li>
+          </ul>
+        </li>
+        <li><a class="dropdown-toggle" id="settingMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">设置</a>
+          <ul class="dropdown-menu" aria-labelledby="settingMenu">
+            <li><a href="{:url('config/setting')}">基本设置</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="disabled"><a>扩展菜单</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+<!-- left --> 
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main">
+      <form action="{:url('article/delall')}" method="post" >
+        <h1 class="page-header">操作</h1>
+        <ol class="breadcrumb">
+          <li><a href="{:url('article/add')}">增加文章</a></li>
+        </ol>
+        <h1 class="page-header">管理 <span class="badge">7</span></h1>
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th><span class="glyphicon glyphicon-th-large"></span> <span class="visible-lg">选择</span></th>
+                <th><span class="glyphicon glyphicon-file"></span> <span class="visible-lg">标题</span></th>
+                <th class="hidden-sm"><span class="glyphicon glyphicon-tag"></span> <span class="visible-lg">标签</span></th>              
+                <th><span class="glyphicon glyphicon-time"></span> <span class="visible-lg">日期</span></th>
+                <th><span class="glyphicon glyphicon-pencil"></span> <span class="visible-lg">操作</span></th>
+              </tr>
+            </thead>            
+            <tbody>
+            {foreach $res as $v}
+              <tr>              	
+                <td><input type="checkbox" class="input-control" name="checkbox[]" value="{$v->id}" /></td>
+                <td class="article-title">{$v->title}</td>
+                <td class="hidden-sm">{$v->label}</td>                    
+                <td>{$v->create_time}</td>
+                <td><a href="{:url('article/update',['id'=>$v->id])}">修改</a> <a href="{:url('article/del',['id'=>$v->id])}">删除</a> 
+                	{if ($v->state==0)}
+                	<a href="{:url('article/recom',['id'=>$v->id])}">推荐</a>
+                	{else}
+                	<a href="{:url('article/unrecom',['id'=>$v->id])}" style="color:orange;">取消</a>
+                	{/if}                	
+                	</td>          
+              </tr>
+             {/foreach}         
+            </tbody>           
+          </table>
+        </div>
+        <footer class="message_footer">
+          <nav>
+            <div class="btn-toolbar operation" role="toolbar">
+              <div class="btn-group" role="group"> <a class="btn btn-default" onClick="select()">全选</a> <a class="btn btn-default" onClick="reverse()">反选</a> <a class="btn btn-default" onClick="noselect()">不选</a> </div>
+              <div class="btn-group" role="group">
+                <button type="submit" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="删除全部选中">删除</button>
+              </div>
+            </div>
+            <ul class="pagination pagenav">            
+           	{$res->render()}           
+            </ul>
+          </nav>
+        </footer>
+      </form>
+    </div>
+  </div>
+</section>
+<script src="__STATIC__/admin/js/bootstrap.min.js"></script> 
+<script src="__STATIC__/admin/js/admin-scripts.js"></script> 
+<script>
+//是否确认删除
+$(function(){   
+	$("#main table tbody tr td a").click(function(){
+		var name = $(this);
+		var id = name.attr("rel"); //对应id  
+		if (event.srcElement.outerText == "删除") 
+		{
+			if(window.confirm("此操作不可逆，是否确认？"))
+			{
+				$.ajax({
+					type: "POST",
+					url: "/Article/delete",
+					data: "id=" + id,
+					cache: false, //不缓存此页面   
+					success: function (data) {
+						window.location.reload();
+					}
+				});
+			};
+		};
+	});   
+});
+</script>
+</body>
+</html>

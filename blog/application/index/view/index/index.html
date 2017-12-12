@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{$con->title}</title>
+<meta name="keywords" content="个人博客" />
+<meta name="description" content="优雅、稳重、大气,低调。" />
+<link href="__STATIC__/index/css/index.css" rel="stylesheet">
+
+</head>
+<body>
+{include file='public/header'}
+<div class="banner">
+  <section class="box">
+    <ul class="texts">
+      <p class="p1">怀念我们:</p>
+      <p class="p2">大学的美好生活</p>
+      <p class="p3">By:董勇</p>
+    </ul>
+  </section>
+</div>
+<article>
+  <h2 class="title_tj">
+    <p><span>推荐内容</span></p>
+  </h2>
+  <div class="bloglist left">
+   <!--wz-->
+   {foreach $art as $v}
+    <div class="wz">
+    <h3>{$v->title}</h3>
+    <p class="dateview"><span>{$v->create_time}</span><span>作者：{$v->author}</span><span>分类：[<a href="">{$v->label}</a>]</span></p>
+    <figure><img width="100px" height="100px" src="__STATIC__/upload/{$v->imgname}"></figure>
+    <ul>
+      {$v->content|mb_substr=0,150}
+      <a title="{$v->title}" href="{:url('index/detail',['id'=>$v->id])}" target="_blank" class="readmore">阅读全文>></a>
+    </ul>
+    <div class="clear"></div>
+    </div>
+	{/foreach}
+
+     {$art->render()} 
+  </div>
+
+  <!--right-->
+  <aside class="right"> 
+    <div class="my">
+     <h2><span>自我介绍</span></h2>
+     <img src="__STATIC__/index/images/my123.jpg" width="200" height="200" alt="博客主人">
+       <ul>
+        <li>姓名：董勇</li>
+        <li>职业:大四实习生</li>
+        <li>简介：一个不断学习和研究，php后台和mysql技术的小小技术员</li>
+        <li></li>   
+       </ul>
+    </div>
+    <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+    <div class="news">
+    <h3 class="ph">
+      <p>精心<span>推荐</span></p>
+    </h3>
+    <ul class="paih">
+      {foreach $recom as $k}
+      <li><a href="{:url('index/detail',['id'=>$k->id])}" title="{$k->title}" target="_blank">{$k->title}</a></li>
+      {/foreach}
+    </ul>
+    <h3>
+      <p>用户<span>关注</span></p>
+    </h3>
+    <ul class="rank">
+      {foreach $rows as $vv}
+      <li><a href="{:url('index/detail',['id'=>$vv->id])}" title="{$vv->title}" target="_blank">{$vv->title}</a></li>
+      {/foreach}
+    </ul>
+    
+    <h3 class="links">
+      <p>友情<span>链接</span></p>
+    </h3>
+    <ul class="website">
+    {foreach $fr as $f}
+      <li><a href="{$f->url}" title="{$f->name}" target="_blank">{$f->name}</a></li>
+     {/foreach}
+    </ul> 
+    </div> 
+   </aside>
+</article>
+{include file='public/footer'}
+<!--百度分享-->
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"32"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+</body>
+</html>

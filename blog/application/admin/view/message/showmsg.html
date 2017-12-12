@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>评论 - 个人博客管理系统</title>
+</head>
+<!-- header -->
+{include file='public/header'}
+<!-- header -->
+<!-- left -->
+<div class="row">
+    <aside class="col-sm-3 col-md-2 col-lg-2 sidebar">
+      <ul class="nav nav-sidebar">
+        <li><a href="{:url('index/index')}">报告</a></li>
+      </ul>
+      <ul class="nav nav-sidebar">
+      <li><a href="{:url('diary/diaryshow')}">日志</a></li>
+        <li><a href="{:url('article/index')}">文章</a></li>
+        <li><a href="{:url('comment/index')}">评论</a></li>
+        <li class="active"><a href="{:url('message/msg')}">留言</a></li>
+      </ul>
+      <ul class="nav nav-sidebar">
+        <li><a href="{:url('column/index')}">栏目</a></li>
+        <li><a class="dropdown-toggle" id="otherMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">其他</a>
+          <ul class="dropdown-menu" aria-labelledby="otherMenu">
+            <li><a href="{:url('others/index')}">友情链接</a></li>
+            <li><a href="{:url('others/loginlog')}">访问记录</a></li>           
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav nav-sidebar">
+        <li><a class="dropdown-toggle" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">用户</a>
+          <ul class="dropdown-menu" aria-labelledby="userMenu">
+          <li><a href="{:url('user/detail')}">用户详情</a></li>
+            <li><a href="{:url('user/index')}">管理用户</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="{:url('others/loginlog')}">管理登录日志</a></li>
+          </ul>
+        </li>
+        <li><a class="dropdown-toggle" id="settingMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">设置</a>
+          <ul class="dropdown-menu" aria-labelledby="settingMenu">
+            <li><a href="{:url('config/setting')}">基本设置</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="disabled"><a>扩展菜单</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+<!-- left -->  
+   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main">
+      <div class="row">
+        <div class="col-md-bb">
+          <h1 class="page-header">留言信息</h1>
+            <div class="form-group">
+              <label for="category-name">用户名:</label>
+              <input type="text" id="category-name" name="username" value="{$ob->username}" class="form-control" >
+              </div>
+            <div class="form-group">
+              <label for="category-alias">留言时间:</label>
+              <input type="text" id="category-alias" name="ctime" value="{$ob->gtime|date='Y-m-d H:i:s',###}" class="form-control"  >
+               </div>
+        
+            <div class="form-group">
+              <label for="category-describe">留言内容:</label>
+              <textarea class="form-control" id="category-describe" name="ctext" rows="8" >{$ob->content}</textarea>
+               </div>         
+            <div class="btn btn-primary" ><a href="{:url('message/msg')}" style="color:#fff;">返回</a></div>
+        </div>
+	</div>
+</div>
+
+<script src="__STATIC__/admin/js/bootstrap.min.js"></script> 
+<script src="__STATIC__/admin/js/admin-scripts.js"></script> 
+<script>
+$(function () {
+    $("#main table tbody tr td a").click(function () {
+        var name = $(this);
+        var id = name.attr("rel"); //对应id   
+        if (name.attr("name") === "see") {
+            $.ajax({
+                type: "POST",
+                url: "/Comment/see",
+                data: "id=" + id,
+                cache: false, //不缓存此页面   
+                success: function (data) {
+                    var data = JSON.parse(data);
+                    $('.see-comment-id').html(data.id);
+                    $('.see-comment-page').html(data.page);
+                    $('.see-comment-content').html(data.content);
+                    $('.see-comment-ip').html(data.ip);
+                    $('.see-comment-address').html(data.address);
+                    $('.see-comment-system').html(data.system);
+                    $('.see-comment-browser').html(data.browser);
+                    $('#seeComment').modal('show');
+                }
+            });
+        } else if (name.attr("name") === "delete") {
+            if (window.confirm("此操作不可逆，是否确认？")) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Comment/delete",
+                    data: "id=" + id,
+                    cache: false, //不缓存此页面   
+                    success: function (data) {
+                        window.location.reload();
+                    }
+                });
+            };
+        };
+        return false;
+    });
+});
+</script>
+</body>
+</html>

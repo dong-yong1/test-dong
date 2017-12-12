@@ -1,0 +1,21 @@
+<header>
+  <div id="logo"><a href="{:url('index/index/index')}"></a></div>
+  <nav class="topnav" id="topnav">
+      <a href="{:url('index/index')}"><span>首页</span><span class="en">Home</span></a>
+      <a href="{:url('user/about')}"><span>关于我</span><span class="en">About</span></a>
+      <a href="{:url('user/diary')}"><span>个人日志</span><span class="en">Diary</span></a>
+      <a href="{:url('user/phpend')}"><span>PHP学习</span><span class="en">PHP</span></a>
+      <a href="{:url('user/summary')}"><span>闲言碎语</span><span class="en">Summary</span></a>
+      <a href="{:url('user/gustbook')}"><span>留言版</span><span class="en">Gustbook</span></a>
+  </nav>
+  	 	<div class="register">			
+		{empty name='$Think.session.username'}
+		<a href="{:url('index/user/login')}">登录</a> 	
+		{else}
+		<a href="{:url('user/logout')}">退出</a><p id="register1">欢迎:<b>{$Think.session.username}</b></p>
+		{/empty}
+		<a href="{:url('index/index/index')}">首页</a>					
+  	 	</div>
+</header>
+
+
